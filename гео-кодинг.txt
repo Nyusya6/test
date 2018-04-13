@@ -1,0 +1,115 @@
+Sub habahaba()
+'
+'
+'
+' Неутомимый стажер 1.7
+' Better call Saul: AySemenov@beeline.ru
+    
+    Dim r As Range
+    For Each r In Selection.Cells
+    r.Hyperlinks.Add Anchor:=r.Offset(0, 1), Address:=getlink(getpoint(r.Value)), SubAddress:="", ScreenTip:="", TextToDisplay:=""
+    Next r
+
+
+End Sub
+Sub habalaba()
+On Error GoTo Whoops
+    Dim r As Range, s As String
+    For Each r In Selection.Cells
+    s = r.Value
+    's = Replace(r.Value, ",", ".")
+    's = Replace(s, ",", ".")
+    If s <> " " And s <> "" Then
+    r.Hyperlinks.Add Anchor:=r.Offset(0, 1), Address:=getlink(s), SubAddress:="", ScreenTip:="", TextToDisplay:=getaddress(getXML(s))
+    End If
+    Next r
+Whoops:
+
+End Sub
+
+Sub habababa()
+'
+' Макрос1 Макрос
+'
+' Сочетание клавиш: Ctrl+q
+'
+    On Error GoTo Whoops
+    Dim r As Range, s As String
+    For Each r In Selection.Cells
+    s = getpoint(r.Value)
+    If s <> "" Then
+    r.Offset(0, 1) = Mid(s, 1, InStr(1, s, " "))
+    r.Offset(0, 2) = Mid(s, InStr(1, s, " "))
+    End If
+    Next r
+
+Whoops:
+End Sub
+
+
+Function getXML(adress As String)
+
+    Dim XMLDoc As Object
+    On Error GoTo Whoops
+    Set XMLDoc = CreateObject("MSXML2.DOMDocument")
+    
+    With CreateObject("MSXML2.XMLHTTP")
+        .Open "GET", "https://geocode-maps.yandex.ru/1.x/?geocode=" & adress
+        .send
+        Do: DoEvents: Loop Until .readyState = 4
+        getXML = .responseText
+        
+        .abort
+    End With
+    
+
+     Exit Function
+    
+Whoops:     MsgBox ("Не смог достучаться")
+End Function
+
+Function getpoint(adress As String)
+
+    Dim BN, MN As Object
+     Dim XMLDoc As Object
+ 
+  
+        On Error GoTo Whoops
+ 
+    Set XMLDoc = CreateObject("MSXML2.DOMDocument")
+    XMLDoc.LoadXML getXML(adress)
+    
+    Set BN = XMLDoc.getElementsByTagName("Point")
+    Set MN = BN.Item(0).getElementsByTagName("pos")
+    
+    getpoint = MN.Item(0).Text
+    
+         Exit Function
+    
+Whoops:
+End Function
+Function getaddress(x As String)
+  Dim BN, MN As Object
+     Dim XMLDoc As Object
+ 
+  
+        On Error GoTo Whoops
+ 
+    Set XMLDoc = CreateObject("MSXML2.DOMDocument")
+    XMLDoc.LoadXML x
+    
+    Set BN = XMLDoc.getElementsByTagName("Country")
+    Set MN = BN.Item(0).getElementsByTagName("AddressLine")
+    
+    getaddress = MN.Item(0).Text
+    
+         Exit Function
+    
+Whoops:
+End Function
+Function getlink(point As String)
+
+getlink = "http://maps.yandex.ru/?ll=" & Replace(point, " ", ",") & "&spn=0.011094%2C0.004324&z=17&l=map"
+
+End Function
+
