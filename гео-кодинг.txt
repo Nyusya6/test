@@ -2,12 +2,13 @@ Sub habahaba()
 '
 '
 '
-' Неутомимый стажер 1.7
+' ГЌГҐГіГІГ®Г¬ГЁГ¬Г»Г© Г±ГІГ Г¦ГҐГ° 1.7
 ' Better call Saul: AySemenov@beeline.ru
     
     Dim r As Range
     For Each r In Selection.Cells
     r.Hyperlinks.Add Anchor:=r.Offset(0, 1), Address:=getlink(getpoint(r.Value)), SubAddress:="", ScreenTip:="", TextToDisplay:=""
+    Application.Wait (Now + TimeValue("0:00:01"))
     Next r
 
 
@@ -29,9 +30,9 @@ End Sub
 
 Sub habababa()
 '
-' Макрос1 Макрос
+' ГЊГ ГЄГ°Г®Г±1 ГЊГ ГЄГ°Г®Г±
 '
-' Сочетание клавиш: Ctrl+q
+' Г‘Г®Г·ГҐГІГ Г­ГЁГҐ ГЄГ«Г ГўГЁГё: Ctrl+q
 '
     On Error GoTo Whoops
     Dim r As Range, s As String
@@ -65,7 +66,7 @@ Function getXML(adress As String)
 
      Exit Function
     
-Whoops:     MsgBox ("Не смог достучаться")
+Whoops:     MsgBox ("ГЌГҐ Г±Г¬Г®ГЈ Г¤Г®Г±ГІГіГ·Г ГІГјГ±Гї")
 End Function
 
 Function getpoint(adress As String)
